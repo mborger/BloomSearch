@@ -1,5 +1,4 @@
 #include <iostream>
-#include "MurmurHash3.h"
 #include <pqxx/pqxx>
 #include "util.h"
 
@@ -19,15 +18,6 @@ main(int argc, char* argv[])
 			<< row["last"] << "\t"
 			<< row["bloom"]
 			<< std::endl;
-	}
-
-	auto subStrings = listSubStrings("dog");
-	for(auto s : subStrings) {
-		unsigned int hash;
-		std::bitset<256> filter;
-		MurmurHash3_x86_32(s.c_str(), s.length(), 0, &hash);
-		filter.set(hash % 256);
-		//std::cout << s << "\t" << filter << std::endl;
 	}
 
 	return 0;

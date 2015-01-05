@@ -1,6 +1,7 @@
 #include "util.h"
 #include <cmath>
-#include "MurmurHash3.h"
+#include "hash/MurmurHash3.h"
+#include "hash/SpookyV2.h"
 
 int
 summationSeries(const int n)
@@ -30,6 +31,9 @@ generateBloom(const std::string str)
 	unsigned int murmurHash;
 	MurmurHash3_x86_32(str.c_str(), str.length(), 0, &murmurHash);
 	bloom.set(murmurHash % BLOOM_SIZE);
+
+	unsigned int spookyHash = SpookyHash::Hash32(str.c_str(), str.length(), 0);
+	bloom.set(spookyHash & BLOOM_SIZE);
 
 	return bloom;
 }
