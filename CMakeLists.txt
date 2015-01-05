@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.6)
 
-project(BloomSearch)
+project(BloomSearch CXX ASM)
 
 set(CMAKE_BUILD_TYPE RELEASE)
 
@@ -12,6 +12,9 @@ add_library(util
 	hash/SpookyV2.cpp
 	hash/fastfnv64a.s
 	)
+
+add_executable(insert insert.cpp)
+target_link_libraries(insert util pqxx pq)
 
 add_executable(search search.cpp)
 target_link_libraries(search util pqxx pq)

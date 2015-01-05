@@ -38,12 +38,12 @@ generateBloom(const std::string str)
 	bloom.set(murmurHash % BLOOM_SIZE);
 
 	unsigned int spookyHash = SpookyHash::Hash32(str.c_str(), str.length(), seed);
-	bloom.set(spookyHash & BLOOM_SIZE);
+	bloom.set(spookyHash % BLOOM_SIZE);
 
 	char* buf = (char*) calloc(str.length(), sizeof(char));
 	std::strncpy(buf, str.c_str(), str.length());
-	unsigned long long fnvHash = fnv64a(reinterpret_cast<unsigned char*>(buf), str.length());
-	bloom.set(fnvHash & BLOOM_SIZE);
+	unsigned long long fnvHash = fnv64a(reinterpret_cast<unsigned char*>(buf), (uint64_t)str.length());
+	bloom.set(fnvHash % BLOOM_SIZE);
 
 	return bloom;
 }
