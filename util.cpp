@@ -1,3 +1,5 @@
+#include <algorithm>
+#include <cctype>
 #include "util.h"
 #include <cmath>
 #include <cstring>
@@ -33,17 +35,22 @@ generateBloom(const std::string str)
 	// I'm purposely setting the seeds to 0
 	const int seed {0};
 
-	unsigned int murmurHash;
-	MurmurHash3_x86_32(str.c_str(), str.length(), seed, &murmurHash);
-	bloom.set(murmurHash % BLOOM_SIZE);
+	// Transform the string to lower case
+	std::transform(str.begin(), str.end(), str.begin(), std::tolower);
 
-	unsigned int spookyHash = SpookyHash::Hash32(str.c_str(), str.length(), seed);
-	bloom.set(spookyHash % BLOOM_SIZE);
+	for(auto subStr : listSubStrings(str)) {
+		unsigned int murmurHash;
+		MurmurHash3_x86_32(subStr.c_str(), subStr.length(), seed, &murmurHash);
+		bloom.set(murmurHash % BLOOM_SIZE);
 
-	char* buf = (char*) calloc(str.length(), sizeof(char));
-	std::strncpy(buf, str.c_str(), str.length());
-	unsigned long long fnvHash = fnv64a(reinterpret_cast<unsigned char*>(buf), (uint64_t)str.length());
-	bloom.set(fnvHash % BLOOM_SIZE);
+		unsigned int spookyHash = SpookyHash::Hash32(subStr.c_str(), subStr.length(), seed);
+		bloom.set(spookyHash % BLOOM_SIZE);
+
+		char* buf = (char*) calloc(subStr.length(), sizeof(char));
+		std::strncpy(buf, subStr.c_str(), subStr.length());
+		unsigned long long fnvHash = fnv64a(reinterpret_cast<unsigned char*>(buf), (uint64_t)subStr.length());
+		bloom.set(fnvHash % BLOOM_SIZE);
+	}
 
 	return bloom;
 }
