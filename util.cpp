@@ -1,5 +1,7 @@
 #include "util.h"
 #include <cmath>
+#include <cstring>
+#include "hash/fastfnv64a.h"
 #include "hash/MurmurHash3.h"
 #include "hash/SpookyV2.h"
 
@@ -28,12 +30,20 @@ generateBloom(const std::string str)
 {
 	std::bitset<BLOOM_SIZE> bloom;
 
+	// I'm purposely setting the seeds to 0
+	const int seed {0};
+
 	unsigned int murmurHash;
-	MurmurHash3_x86_32(str.c_str(), str.length(), 0, &murmurHash);
+	MurmurHash3_x86_32(str.c_str(), str.length(), seed, &murmurHash);
 	bloom.set(murmurHash % BLOOM_SIZE);
 
-	unsigned int spookyHash = SpookyHash::Hash32(str.c_str(), str.length(), 0);
+	unsigned int spookyHash = SpookyHash::Hash32(str.c_str(), str.length(), seed);
 	bloom.set(spookyHash & BLOOM_SIZE);
+
+	char* buf = (char*) calloc(str.length(), sizeof(char));
+	std::strncpy(buf, str.c_str(), str.length());
+	unsigned long long fnvHash = fnv64a(reinterpret_cast<unsigned char*>(buf), str.length());
+	bloom.set(fnvHash & BLOOM_SIZE);
 
 	return bloom;
 }
