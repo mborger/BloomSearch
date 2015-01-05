@@ -15,7 +15,7 @@ Build Code
 
 Populate Database
 -----------------
-	$> while read l; do ./insert $l; done < ../sampleNames.csv
+	$> while read line; do ./insert $line; done < ../sampleNames.csv
 
 Search Database
 ---------------
