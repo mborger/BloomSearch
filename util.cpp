@@ -36,9 +36,11 @@ generateBloom(const std::string str)
 	const int seed {0};
 
 	// Transform the string to lower case
-	std::transform(str.begin(), str.end(), str.begin(), std::tolower);
+	std::string lowerStr;
+	lowerStr.resize(str.length());
+	std::transform(str.begin(), str.end(), lowerStr.begin(), ::tolower);
 
-	for(auto subStr : listSubStrings(str)) {
+	for(auto subStr : listSubStrings(lowerStr)) {
 		unsigned int murmurHash;
 		MurmurHash3_x86_32(subStr.c_str(), subStr.length(), seed, &murmurHash);
 		bloom.set(murmurHash % BLOOM_SIZE);
