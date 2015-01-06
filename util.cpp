@@ -40,7 +40,7 @@ generateBloom(const std::string str)
 	lowerStr.resize(str.length());
 	std::transform(str.begin(), str.end(), lowerStr.begin(), ::tolower);
 
-	for(auto subStr : listSubStrings(lowerStr)) {
+	for(const auto subStr : listSubStrings(lowerStr)) {
 		unsigned int murmurHash;
 		MurmurHash3_x86_32(subStr.c_str(), subStr.length(), seed, &murmurHash);
 		bloom.set(murmurHash % BLOOM_SIZE);
