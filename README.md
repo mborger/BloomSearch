@@ -1,6 +1,6 @@
 BloomSearch
 ===========
-An example of using a bloom filter to provide string searching.
+An example of using a bloom filter to provide string searching. This example uses PostgreSQL since it has a nice bit field data type to work with.
 
 Setup Database
 --------------
@@ -17,7 +17,13 @@ Build Code
 
 Populate Database
 -----------------
-	$> while read line; do ./insert $line; done < ../sampleNames.csv
+Names can be inserted individually by using the `insert` program.
+
+	$> ./insert FIRST_NAME LAST_NAME
+
+You can also utilize a list of sample names.
+
+	$> while read line; do ./insert $line; done < ../sampleNames.txt
 
 Search Database
 ---------------
