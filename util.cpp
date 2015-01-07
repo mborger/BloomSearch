@@ -40,19 +40,17 @@ generateBloom(const std::string str)
 	lowerStr.resize(str.length());
 	std::transform(str.begin(), str.end(), lowerStr.begin(), ::tolower);
 
-	for(const auto subStr : listSubStrings(lowerStr)) {
-		unsigned int murmurHash;
-		MurmurHash3_x86_32(subStr.c_str(), subStr.length(), seed, &murmurHash);
-		bloom.set(murmurHash % BLOOM_SIZE);
+	unsigned int murmurHash;
+	MurmurHash3_x86_32(lowerStr.c_str(), lowerStr.length(), seed, &murmurHash);
+	bloom.set(murmurHash % BLOOM_SIZE);
 
-		unsigned int spookyHash = SpookyHash::Hash32(subStr.c_str(), subStr.length(), seed);
-		bloom.set(spookyHash % BLOOM_SIZE);
+	unsigned int spookyHash = SpookyHash::Hash32(lowerStr.c_str(), lowerStr.length(), seed);
+	bloom.set(spookyHash % BLOOM_SIZE);
 
-		char* buf = (char*) calloc(subStr.length(), sizeof(char));
-		std::strncpy(buf, subStr.c_str(), subStr.length());
-		unsigned long long fnvHash = fnv64a(reinterpret_cast<unsigned char*>(buf), (uint64_t)subStr.length());
-		bloom.set(fnvHash % BLOOM_SIZE);
-	}
+	char* buf = (char*) calloc(lowerStr.length(), sizeof(char));
+	std::strncpy(buf, lowerStr.c_str(), lowerStr.length());
+	unsigned long long fnvHash = fnv64a(reinterpret_cast<unsigned char*>(buf), (uint64_t)lowerStr.length());
+	bloom.set(fnvHash % BLOOM_SIZE);
 
 	return bloom;
 }

@@ -15,8 +15,13 @@ main(int argc, char* argv[])
 	const std::string firstName {argv[1]};
 	const std::string lastName {argv[2]};
 
-	const auto firstNameBloom = generateBloom(firstName);
-	const auto lastNameBloom = generateBloom(lastName);
+	std::bitset<BLOOM_SIZE> firstNameBloom, lastNameBloom;
+	for(const auto substr : listSubStrings(firstName)) {
+		firstNameBloom |= generateBloom(substr);
+	}
+	for(const auto substr : listSubStrings(lastName)) {
+		lastNameBloom |= generateBloom(substr);
+	}
 
 	connection conn; // defaults to dbname=<username>
 	work txn(conn, "Insert transaction");
