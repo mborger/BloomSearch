@@ -1,6 +1,13 @@
 BloomSearch
 ===========
-An example of using a bloom filter to provide string searching. This example uses PostgreSQL since it has a nice bit field data type to work with.
+An example of using a Bloom filter to provide substring searching.
+
+Requirements
+------------
+* A C++11 compliant compiler
+* CMake
+* PostgreSQL
+* Libpqxx
 
 Setup Database
 --------------
