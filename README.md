@@ -34,4 +34,10 @@ You can also utilize a list of sample names.
 
 Search Database
 ---------------
-	$> ./search <term>
+Search by string using LIKE operator.
+
+	$> ./searchName <term>
+
+Search by Bloom filter using bitwise AND operator.
+
+	$> ./searchBloom <term>

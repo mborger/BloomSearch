@@ -18,3 +18,6 @@ target_link_libraries(insert util pqxx pq)
 
 add_executable(searchBloom src/searchBloom.cpp)
 target_link_libraries(searchBloom util pqxx pq)
+
+add_executable(searchName src/searchName.cpp)
+target_link_libraries(searchName util pqxx pq)
