@@ -32,8 +32,8 @@ generateBloom(const std::string str)
 {
 	std::bitset<BLOOM_SIZE> bloom;
 
-	// I'm purposely setting the seeds to 0
-	const int seed {0};
+	// Arbitrarily chosen seed value
+	const int seed {42};
 
 	// Transform the string to lower case
 	std::string lowerStr;
