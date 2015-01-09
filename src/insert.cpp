@@ -22,10 +22,10 @@ main(int argc, char* argv[])
 	work txn(conn, "Insert transaction");
 
 	txn.exec("INSERT INTO users(first,first_bloom,last,last_bloom) VALUES("
-			"'" + firstName + "',"
+			"'"  + firstName                  + "',"
 			"b'" + firstNameBloom.to_string() + "',"
-			"'" + lastName + "',"
-			"b'" + lastNameBloom.to_string() + "'"
+			"'"  + lastName                   + "',"
+			"b'" + lastNameBloom.to_string()  + "'"
 			")");
 	txn.commit();
 

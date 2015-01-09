@@ -20,7 +20,7 @@ main(int argc, char* argv[])
 
 	result r = txn.exec("SELECT * FROM users WHERE "
 			"first_bloom & b'" + searchTermBloom.to_string() + "' = b'" + searchTermBloom.to_string() + "' OR "
-			"last_bloom & b'" + searchTermBloom.to_string() + "' = b'" + searchTermBloom.to_string() + "'"
+			"last_bloom & b'"  + searchTermBloom.to_string() + "' = b'" + searchTermBloom.to_string() + "'"
 			);
 
 	for(auto row : r) {
