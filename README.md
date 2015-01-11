@@ -2,6 +2,8 @@ BloomSearch
 ===========
 An example of using a Bloom filter to provide substring searching.
 
+I wrote up a walkthrough of the code [here](http://borgernet.com/blog/substring-searching-on-encrypted-data/).
+
 Requirements
 ------------
 * A C++11 compliant compiler
