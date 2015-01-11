@@ -24,13 +24,13 @@ Build Code
 
 Populate Database
 -----------------
-Names can be inserted individually by using the `insert` program.
+Names can be inserted individually by using the `insert` program. One name per line.
 
-	$> ./insert FIRST_NAME LAST_NAME
+	$> ./insert
 
 You can also utilize a list of sample names.
 
-	$> while read line; do ./insert $line; done < ../sampleNames.txt
+	$> cat ../sampleNames.txt | ./insert
 
 Search Database
 ---------------
