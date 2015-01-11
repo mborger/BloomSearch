@@ -52,6 +52,7 @@ generateBloom(const std::string str)
 		std::strncpy(buf, subStr.c_str(), subStr.length());
 		unsigned long long fnvHash = fnv64a(reinterpret_cast<unsigned char*>(buf), (uint64_t)subStr.length());
 		bloom.set(fnvHash % BLOOM_SIZE);
+		delete buf;
 	}
 
 	return bloom;
