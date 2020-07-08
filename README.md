@@ -2,7 +2,7 @@ BloomSearch
 ===========
 An example of using a Bloom filter to provide substring searching.
 
-I wrote up a walkthrough of the code [here](http://borgernet.com/blog/substring-searching-on-encrypted-data/).
+I wrote up a walkthrough of the code [here](https://borgernet.com/2015/01/05/SubstringSearching.html).
 
 Requirements
 ------------
